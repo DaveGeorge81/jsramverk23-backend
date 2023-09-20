@@ -7,7 +7,7 @@ const collectionName = "tickets";
 
 const database = {
     openDb: async function openDb() {
-        let dsn = `mongodb://localhost:27017/trains`;
+        let dsn = process.env.DBWEBB_DSN || `mongodb://localhost:27017/trains`;
 
         if (process.env.NODE_ENV === 'test') {
             dsn = "mongodb://localhost:27017/test";
