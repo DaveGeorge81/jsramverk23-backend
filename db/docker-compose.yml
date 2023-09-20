@@ -7,11 +7,11 @@ services:
             environment:
                 - DBWEBB_DSN=mongodb://mongodb:27017/trains
             volumes:
-                - ./:/app/
+                - ../:/app/
                 - /app/node_modules/
             ports:
                 - 1337:1337
-            command: "node src/server.js"
+            command: "node app.js"
     mongodb:
         image: mongo
         environment:
