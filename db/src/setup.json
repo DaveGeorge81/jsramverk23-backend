@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "code": "ANA002",
+        "trainnumber": "8013",
+        "traindate": "2023-09-13"
+    },
+    {
+        "id": 2,
+        "code": "ANA002",
+        "trainnumber": "527",
+        "traindate": "2023-09-13"
+    }
+]
