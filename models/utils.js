@@ -5,9 +5,8 @@ const trains = {
         let db;
 
         try {
-            db = await database.openDb(version);
-
-        } catch(error) {
+            db = await database.openDb();
+        } catch (error) {
             return {
                 status: error.status,
                 message: error.message,

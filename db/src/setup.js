@@ -5,7 +5,6 @@
 
 const dsn =  process.env.DBWEBB_DSN || "mongodb://localhost:27017/trains";
 
-const database = require('../database.js');
 const functions = require('./functions.js');
 
 const fs = require("fs");
