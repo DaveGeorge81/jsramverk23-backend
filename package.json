@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "nyc --reporter=html --reporter=text --reporter=clover mocha --exit --recursive --timeout 10000",
-    "start": "nodemon app.js",
-    "eslint": "eslint ."
+    "start": "node app.js",
+    "eslint": "eslint .",
+    "watch": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
