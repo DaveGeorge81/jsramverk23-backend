@@ -6,7 +6,7 @@ const mongo = require("mongodb").MongoClient;
 const collectionName = "tickets";
 
 const database = {
-    openDb: async function openDb() {
+    getDb: async function getDb() {
         let dsn = process.env.DBWEBB_DSN || `mongodb://localhost:27017/trains`;
 
         if (process.env.NODE_ENV === 'test') {
@@ -14,8 +14,8 @@ const database = {
         }
 
         const client = await mongo.connect(dsn);
-        const db = await client.db();
-        const collection = await db.collection(collectionName);
+        const db = client.db();
+        const collection = db.collection(collectionName);
 
         return {
             db: db,
