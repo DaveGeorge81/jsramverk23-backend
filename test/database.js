@@ -8,7 +8,6 @@ process.env.NODE_ENV = 'test';
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-
 const server = require('../app.js');
 
 chai.should();
@@ -21,7 +20,7 @@ chai.use(chaiHttp);
 
 describe('tickets', () => {
     before(async () => {
-        const db = await database.openDb();
+        const db = await database.getDb();
 
         db.db.listCollections(
             { name: collectionName }
@@ -96,9 +95,7 @@ describe('tickets', () => {
                 traindate: "2023-09-21"
             }];
 
-            const dsn =  "mongodb://localhost:27017/test";
-
-            functions.resetCollection(dsn, collectionName, doc);
+            functions.resetCollection(collectionName, doc);
 
             chai.request(server)
                 .get("/tickets")
