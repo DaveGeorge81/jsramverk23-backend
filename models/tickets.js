@@ -1,15 +1,15 @@
 const database = require('../db/database.js');
 const functions = require('../db/src/functions.js');
 
-const dsn =  process.env.DBWEBB_DSN || "mongodb://localhost:27017/trains";
+// const dsn =  process.env.DBWEBB_DSN || "mongodb://localhost:27017/trains";
 
 const tickets = {
     getTickets: async function getTickets(req, res) {
         let db;
 
         try {
-            db = await database.openDb();
-            const resultSet = await functions.findInCollection(dsn, "tickets", {}, {}, 0);
+            db = await database.getDb();
+            const resultSet = await functions.findInCollection("tickets", {}, {}, 0);
 
             if (resultSet) {
                 return res.json({ data: resultSet });
@@ -29,7 +29,7 @@ const tickets = {
     },
 
     createTicket: async function createTicket(req, res) {
-        let db = await database.openDb();
+        let db = await database.getDb();
 
         const doc = {
             id: req.body.id,
