@@ -9,13 +9,11 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app.js');
-
-chai.should();
-
 const database = require("../db/database.js");
 const collectionName = "tickets";
 const functions = require("../db/src/functions.js");
 
+chai.should();
 chai.use(chaiHttp);
 
 describe('tickets', () => {

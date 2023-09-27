@@ -12,7 +12,6 @@ const server = require('../app.js');
 // const HTMLParser = require('node-html-parser');
 
 chai.should();
-
 chai.use(chaiHttp);
 
 describe('app', () => {
