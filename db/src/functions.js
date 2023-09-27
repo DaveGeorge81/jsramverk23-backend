@@ -11,7 +11,6 @@ const database = require('../database.js');
  *
  * @async
  *
- * @param {string} dsn     DSN to connect to database.
  * @param {string} colName Name of collection.
  * @param {string} doc     Documents to be inserted into collection.
  *
@@ -19,8 +18,8 @@ const database = require('../database.js');
  *
  * @return {Promise<void>} Void
  */
-async function resetCollection(dsn, colName, doc) {
-    const db = await database.openDb();
+async function resetCollection(colName, doc) {
+    const db = await database.getDb();
     const col = db.db.collection(colName);
 
     await col.deleteMany();
@@ -34,7 +33,6 @@ async function resetCollection(dsn, colName, doc) {
  *
  * @async
  *
- * @param {string} dsn        DSN to connect to database.
  * @param {string} colName    Name of collection.
  * @param {object} criteria   Search criteria.
  * @param {object} projection What to project in results.
@@ -44,8 +42,8 @@ async function resetCollection(dsn, colName, doc) {
  *
  * @return {Promise<array>} The resultset as an array.
  */
-async function findInCollection(dsn, colName, criteria, projection, limit) {
-    const db = await database.openDb();
+async function findInCollection(colName, criteria, projection, limit) {
+    const db = await database.getDb();
 
     const col = db.db.collection(colName);
     const res = await col.find(criteria, projection).limit(limit).toArray();
