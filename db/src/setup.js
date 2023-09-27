@@ -1,9 +1,8 @@
 /**
  * Setup database with some default data
+ * Use with localhost database
  */
 "use strict";
-
-const dsn =  process.env.DBWEBB_DSN || "mongodb://localhost:27017/trains";
 
 const functions = require('./functions.js');
 
@@ -14,6 +13,5 @@ const docs = JSON.parse(fs.readFileSync(
     "utf8"
 ));
 
-
-functions.resetCollection(dsn, "tickets", docs)
+functions.resetCollection("tickets", docs)
     .catch(err => console.log(err));
