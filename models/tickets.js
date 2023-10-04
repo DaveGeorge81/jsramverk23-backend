@@ -1,8 +1,6 @@
 const database = require('../db/database.js');
 const functions = require('../db/src/functions.js');
 
-// const dsn =  process.env.DBWEBB_DSN || "mongodb://localhost:27017/trains";
-
 const tickets = {
     getTickets: async function getTickets(req, res) {
         let db;
