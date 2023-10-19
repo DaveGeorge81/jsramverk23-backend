@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const EventSource = require('eventsource');
+const delayed = require('./delayed.js');
 
 function getQuery() {
     return `<REQUEST>
@@ -64,7 +65,7 @@ const trains = {
                     .reverse();
 
                 const trainObject = {
-                    trainnumber: changedPosition.Train.AdvertisedTrainNumber,
+                    trainnumber: changedPosition.Train.OperationalTrainNumber,
                     position: position,
                     timestamp: changedPosition.TimeStamp,
                     bearing: changedPosition.Bearing,
@@ -74,12 +75,12 @@ const trains = {
 
                 if (
                     Object.prototype.hasOwnProperty
-                        .call(trainPositions, changedPosition.Train.AdvertisedTrainNumber)
+                        .call(trainPositions, changedPosition.Train.OperationalTrainNumber)
                 ) {
                     socket.emit("message", trainObject);
                 }
 
-                trainPositions[changedPosition.Train.AdvertisedTrainNumber] = trainObject;
+                trainPositions[changedPosition.Train.OperationalTrainNumber] = trainObject;
             }
         } catch (e) {
             console.log(e);

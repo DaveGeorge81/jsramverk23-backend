@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const trains = require('./trains');
 
 function getQuery() {
     return `<REQUEST>
@@ -48,7 +49,7 @@ const delayed = {
             console.log(result.RESPONSE.RESULT[0].TrainAnnouncement)
             return result.RESPONSE.RESULT[0].TrainAnnouncement;
         }
-
+      
         let trains = [];
 
         // Get only trains that has train position data
