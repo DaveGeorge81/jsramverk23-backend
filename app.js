@@ -10,6 +10,21 @@ const delayed = require('./routes/delayed.js');
 const tickets = require('./routes/tickets.js');
 const codes = require('./routes/codes.js');
 
+const { createHandler } = require('graphql-http/lib/use/express');
+
+// const expressPlayground = require('graphql-playground-middleware-express')
+//     .default
+
+const { GraphQLSchema } = require('graphql')
+
+const RootQueryType = require("./graphql/root.js");
+const RootMutationType = require("./graphql/mutate.js");
+
+const schema = new GraphQLSchema({
+    query: RootQueryType,
+    mutation: RootMutationType
+});
+
 const app = express();
 const httpServer = require("http").createServer(app);
 
@@ -36,6 +51,13 @@ app.get('/', (req, res) => {
         data: 'Hello World!'
     });
 });
+
+app.use('/graphql', createHandler({
+    schema: schema
+}))
+
+// for developing mode
+// app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
 
 app.use("/delayed", delayed);
 app.use("/tickets", tickets);
