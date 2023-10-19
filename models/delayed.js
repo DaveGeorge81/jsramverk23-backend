@@ -33,7 +33,7 @@ function getQuery() {
 }
 
 const delayed = {
-    getDelayedTrains: async function getDelayedTrains(req, res) {
+    getDelayedTrains: async function getDelayedTrains(req, res=undefined) {
         const query = getQuery();
 
         const response = await fetch(
@@ -44,6 +44,10 @@ const delayed = {
             });
         const result = await response.json();
 
+        if (res === undefined) {
+            console.log(result.RESPONSE.RESULT[0].TrainAnnouncement)
+            return result.RESPONSE.RESULT[0].TrainAnnouncement;
+        }
         return res.json({
             data: result.RESPONSE.RESULT[0].TrainAnnouncement
         });
