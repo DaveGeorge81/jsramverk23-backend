@@ -58,10 +58,6 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use('/graphql', createHandler({
-    schema: schema
-}))
-
 // for developing mode
 // app.get('/playground', expressPlayground({ endpoint: '/graphql' }))
 
@@ -71,6 +67,10 @@ app.use("/token", token);
 
 app.all('*', authModel.checkAPIKey);
 app.all('*', authModel.checkToken);
+
+app.use('/graphql', createHandler({
+    schema: schema
+}))
 
 app.use("/delayed", delayed);
 app.use("/tickets", tickets);
