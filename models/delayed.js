@@ -1,5 +1,4 @@
 const fetch = require('node-fetch');
-const trains = require('./trains');
 
 function getQuery() {
     return `<REQUEST>
@@ -49,18 +48,18 @@ const delayed = {
             console.log(result.RESPONSE.RESULT[0].TrainAnnouncement)
             return result.RESPONSE.RESULT[0].TrainAnnouncement;
         }
-      
-        let trains = [];
 
-        // Get only trains that has train position data
-        for (let i=0; i<result.RESPONSE.RESULT[0].TrainAnnouncement.length; i++) {
-            if (result.RESPONSE.RESULT[0].TrainAnnouncement[i].hasOwnProperty("FromLocation")) {
-                trains.push(result.RESPONSE.RESULT[0].TrainAnnouncement[i])
-            }
-        }
+        // let trains = [];
+
+        // // Get only trains that has train position data
+        // for (let i=0; i<result.RESPONSE.RESULT[0].TrainAnnouncement.length; i++) {
+        //     if (result.RESPONSE.RESULT[0].TrainAnnouncement[i].hasOwnProperty("FromLocation")) {
+        //         trains.push(result.RESPONSE.RESULT[0].TrainAnnouncement[i])
+        //     }
+        // }
 
         return res.json({
-            data: trains
+            data: result.RESPONSE.RESULT[0].TrainAnnouncement
         });
     }
 };
