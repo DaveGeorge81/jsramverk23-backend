@@ -25,7 +25,7 @@ const trains = {
             console.log('a user connected');
 
             eventSource.onmessage = (e) => {
-                this.trackPosition(e, socket, trainPositions);
+                this.trackPosition(e, io, trainPositions);
             };
         });
 
@@ -52,7 +52,7 @@ const trains = {
         return eventSource;
     },
 
-    trackPosition: function trackPosition(e, socket, trainPositions) {
+    trackPosition: function trackPosition(e, io, trainPositions) {
         try {
             const parsedData = JSON.parse(e.data);
 
@@ -77,7 +77,7 @@ const trains = {
                     Object.prototype.hasOwnProperty
                         .call(trainPositions, changedPosition.Train.OperationalTrainNumber)
                 ) {
-                    socket.emit("message", trainObject);
+                    io.emit("message", trainObject);
                 }
 
                 trainPositions[changedPosition.Train.OperationalTrainNumber] = trainObject;

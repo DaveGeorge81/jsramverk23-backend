@@ -69,7 +69,7 @@ const tickets = {
 
         await db.collection.updateOne(
             { "id" : req.id },
-            { $set: {"code": req.code, "traindate": today.toISOString().substring(0, 10) }});
+            { $set: {"code": req.code, "traindate": today.toISOString().substring(0, 10)}});
         await db.client.close();
 
         if (res === undefined) {
