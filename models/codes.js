@@ -13,7 +13,7 @@ function getQuery() {
 }
 
 const codes = {
-    getCodes: async function getCodes(req, res) {
+    getCodes: async function getCodes(req, res=undefined,) {
         const query = getQuery();
 
         const response = await fetch(
@@ -24,6 +24,9 @@ const codes = {
             });
         const result = await response.json();
 
+        if (res === undefined) {
+            return result.RESPONSE.RESULT[0].ReasonCode;
+        }
         return res.json({
             data: result.RESPONSE.RESULT[0].ReasonCode
         });

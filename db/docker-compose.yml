@@ -8,7 +8,7 @@ services:
                 - DBWEBB_DSN=mongodb://mongodb:27017/trains
             volumes:
                 - ../:/app/
-                - /app/node_modules/
+                - ../:/node_modules/
             ports:
                 - 1337:1337
             command: "node app.js"
