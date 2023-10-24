@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const trains = require('./models/trains.js');
 const delayed = require('./routes/delayed.js');
 const tickets = require('./routes/tickets.js');
+const ticketModel = require("./models/tickets.js")
 const codes = require('./routes/codes.js');
 const token = require('./routes/token.js');
 const login = require('./routes/login.js');
@@ -76,10 +77,55 @@ app.use("/delayed", delayed);
 app.use("/tickets", tickets);
 app.use("/codes", codes);
 
-const server = httpServer.listen(port, () => {
+let allTickets = [];
+
+io.sockets.on('connection', async function(socket) {
+    allTickets = await ticketModel.getTickets();
+    console.log(socket.id)
+    allTickets.map((ticket) => {
+        ticket.locked = false;
+        console.log(ticket);
+
+        return ticket
+    });
+
+    socket.emit("allTickets", allTickets);
+
+    socket.on("lockSocket", function(data) {
+        allTickets.forEach((ticket) => {
+            if (ticket.id === data) {
+                ticket.locked = true;
+            }
+        });
+
+        io.emit("allTickets", allTickets);
+    })
+
+    socket.on("changeStatus", async function(data) {
+        allTickets = await ticketModel.getTickets();
+        allTickets.forEach((ticket) => {
+            if (ticket.id === data) {
+                ticket.locked = false;
+            }
+        });
+
+        io.emit("allTickets", allTickets);
+    });
+
+    // socket.on("alltrains", async function() {
+    //     allTrains = await trains.fetchTrainPositions(io);
+
+    //     io.emit("allTrains", allTrains);
+    // });
+
+})
+
+
+const server = httpServer.listen(port, async () => {
     console.log(`Example app listening on port ${port}`);
 });
 
 trains.fetchTrainPositions(io);
+
 
 module.exports = server;
