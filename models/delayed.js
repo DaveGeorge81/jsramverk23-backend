@@ -49,17 +49,18 @@ const delayed = {
             return result.RESPONSE.RESULT[0].TrainAnnouncement;
         }
 
-        // let trains = [];
+        let trains = [];
 
-        // // Get only trains that has train position data
-        // for (let i=0; i<result.RESPONSE.RESULT[0].TrainAnnouncement.length; i++) {
-        //     if (result.RESPONSE.RESULT[0].TrainAnnouncement[i].hasOwnProperty("FromLocation")) {
-        //         trains.push(result.RESPONSE.RESULT[0].TrainAnnouncement[i])
-        //     }
-        // }
+        // Get only trains that has train position data
+        for (let i=0; i<result.RESPONSE.RESULT[0].TrainAnnouncement.length; i++) {
+            if (Object.prototype.hasOwnProperty
+                                .call(result.RESPONSE.RESULT[0].TrainAnnouncement[i], "FromLocation")) {
+                trains.push(result.RESPONSE.RESULT[0].TrainAnnouncement[i])
+            }
+        }
 
         return res.json({
-            data: result.RESPONSE.RESULT[0].TrainAnnouncement
+            data: trains
         });
     }
 };
