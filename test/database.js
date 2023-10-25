@@ -16,6 +16,9 @@ const functions = require("../db/src/functions.js");
 chai.should();
 chai.use(chaiHttp);
 
+let token;
+let apiKey;
+
 describe('tickets', () => {
     before(async () => {
         const db = await database.getDb();
@@ -37,11 +40,22 @@ describe('tickets', () => {
             });
     });
 
+    beforeEach(async () => {
+        const response = await chai.request(server).get('/token');
+        token = response._body.data.token;
+
+        await chai.request(server).get('/register').send({email: "app@email.se", password: "test"});
+        db = await database.getUserDb();
+        let found = await db.collection.findOne({ email: "app@email.se" });
+        apiKey = found.key;
+    });
+
     /* GET route */
     describe('GET /tickets', () => {
         it('should get 200 when getting tickets', (done) => {
             chai.request(server)
-                .get("/tickets")
+                .get("/tickets?api_key=" + apiKey)
+                .set('x-access-token', token)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property("data");
@@ -64,7 +78,8 @@ describe('tickets', () => {
             };
 
             chai.request(server)
-                .post("/tickets")
+                .post("/tickets?api_key=" + apiKey)
+                .set('x-access-token', token)
                 .send(doc)
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -96,7 +111,8 @@ describe('tickets', () => {
             functions.resetCollection(collectionName, doc);
 
             chai.request(server)
-                .get("/tickets")
+                .get("/tickets?api_key=" + apiKey)
+                .set('x-access-token', token)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.have.property("data");
