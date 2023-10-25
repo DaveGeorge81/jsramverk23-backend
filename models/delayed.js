@@ -45,22 +45,23 @@ const delayed = {
         const result = await response.json();
 
         if (res === undefined) {
-            console.log(result.RESPONSE.RESULT[0].TrainAnnouncement)
+            // console.log(result.RESPONSE.RESULT[0].TrainAnnouncement)
             return result.RESPONSE.RESULT[0].TrainAnnouncement;
         }
 
-        let trains = [];
-
+        // let trains = [];
+        // console.log(result.RESPONSE.RESULT[0].TrainAnnouncement.length)
         // Get only trains that has train position data
         for (let i=0; i<result.RESPONSE.RESULT[0].TrainAnnouncement.length; i++) {
-            if (Object.prototype.hasOwnProperty
-                                .call(result.RESPONSE.RESULT[0].TrainAnnouncement[i], "FromLocation")) {
-                trains.push(result.RESPONSE.RESULT[0].TrainAnnouncement[i])
+            if ((Object.prototype.hasOwnProperty
+                                .call(result.RESPONSE.RESULT[0].TrainAnnouncement[i], "FromLocation")) === false) {
+                let index = result.RESPONSE.RESULT[0].TrainAnnouncement.indexOf(result.RESPONSE.RESULT[0].TrainAnnouncement[i]);
+                result.RESPONSE.RESULT[0].TrainAnnouncement.splice(index, 1);
             }
         }
-
+        // console.log(result.RESPONSE.RESULT[0].TrainAnnouncement.length)
         return res.json({
-            data: trains
+            data: result.RESPONSE.RESULT[0].TrainAnnouncement
         });
     }
 };
