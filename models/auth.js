@@ -13,11 +13,11 @@ const auth = {
             return next();
         }
 
-        if ( req.path == '/tickets') {
+        if ( req.path == '/login') {
             return next();
         }
 
-        if ( req.path == '/ticket') {
+        if ( req.path == '/register') {
             return next();
         }
 
@@ -274,9 +274,9 @@ const auth = {
         if (dbFind !== "") {
             if (dbFind.email === email) {
                 await db.client.close();
-                return res.json({
-                    data: {
-                        message: "Email already registered"
+                return res.status(401).json({
+                    errors: {
+                        title: "Email already registered"
                     }
                 })
             }
