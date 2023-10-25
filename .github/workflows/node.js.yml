@@ -3,6 +3,9 @@
 
 name: Node.js CI
 
+env:
+  JWT_SECRET: "aiodjfaoiefje9e9938rpokdkskldskld3939dld"
+
 on:
   push:
     branches: [ "main" ]
