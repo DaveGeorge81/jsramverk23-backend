@@ -1,0 +1,31 @@
+{"data": [{
+    "ActivityId": "12",
+    "ActivityType": "E",
+    "AdvertisedTimeAtLocation": "12.06",
+    "EstimatedTimeAtLocation": "12.10",
+    "AdvertisedTrainIdent": "A",
+    "Canceled": false,
+    "FromLocation": "AB",
+    "ToLocation": "BA",
+    "LocationSignature": "C",
+    "TimeAtLocation": "12.06",
+    "OperationalTrainNumber": 1122,
+    "TrainOwner": "AP"
+    },
+    {
+    "ActivityId": "13",
+    "ActivityType": "EF",
+    "AdvertisedTimeAtLocation": "13.06",
+    "EstimatedTimeAtLocation": "13.10",
+    "AdvertisedTrainIdent": "AA",
+    "Canceled": false,
+    "FromLocation": "BV",
+    "ToLocation": "JS",
+    "LocationSignature": "CF",
+    "TimeAtLocation": "13.06",
+    "OperationalTrainNumber": 3314,
+    "TrainOwner": "AP"
+    }]
+}
+
+
