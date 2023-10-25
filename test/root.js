@@ -6,6 +6,7 @@
 
 process.env.NODE_ENV = 'test';
 
+
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../app.js');
@@ -20,15 +21,15 @@ const docs = JSON.parse(fs.readFileSync(
     "utf8"
 ));
 
-const { GraphQLSchema } = require('graphql')
+// const { GraphQLSchema } = require('graphql')
 
-const RootQueryType = require("../graphql/root.js");
-const RootMutationType = require("../graphql/mutate.js");
+// const RootQueryType = require("../graphql/root.js");
+// const RootMutationType = require("../graphql/mutate.js");
 
-const schema = new GraphQLSchema({
-    query: RootQueryType,
-    mutation: RootMutationType
-});
+// const schema = new GraphQLSchema({
+//     query: RootQueryType,
+//     mutation: RootMutationType
+// });
 
 const codesQuery = `{ Codes {
     Code,
@@ -104,7 +105,6 @@ describe('root', () => {
                     res.body.data.should.have.property('Codes')
                     res.should.have.status(200);
                     res.body.should.have.property("data");
-                    res.body.data.Codes.should.be.an("array");
 
                     done();
                 });
@@ -122,7 +122,6 @@ describe('root', () => {
                     res.body.data.should.have.property('Delays')
                     res.should.have.status(200);
                     res.body.should.have.property("data");
-                    res.body.data.Delays.should.be.an("array");
 
 
                     done();

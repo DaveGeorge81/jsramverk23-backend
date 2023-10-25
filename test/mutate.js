@@ -20,15 +20,15 @@ const docs = JSON.parse(fs.readFileSync(
     "utf8"
 ));
 
-const { GraphQLSchema } = require('graphql')
+// const { GraphQLSchema } = require('graphql')
 
-const RootQueryType = require("../graphql/root.js");
-const RootMutationType = require("../graphql/mutate.js");
+// const RootQueryType = require("../graphql/root.js");
+// const RootMutationType = require("../graphql/mutate.js");
 
-const schema = new GraphQLSchema({
-    query: RootQueryType,
-    mutation: RootMutationType
-});
+// const schema = new GraphQLSchema({
+//     query: RootQueryType,
+//     mutation: RootMutationType
+// });
 
 const newTicket = `mutation{addTicket(
     id: 3,
