@@ -1,7 +1,8 @@
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLList
+    GraphQLList,
+    GraphQLInt
 } = require('graphql');
 
 const codesModel = require("../models/codes.js")
@@ -60,7 +61,7 @@ const RootQueryType = new GraphQLObjectType({
             type: TicketType,
             description: 'A single ticket',
             args: {
-                id: { type: GraphQLString },
+                id: { type: GraphQLInt },
             },
             resolve: async function(parent, args) {
                 let ticketArray = await ticketModel.getTickets();
