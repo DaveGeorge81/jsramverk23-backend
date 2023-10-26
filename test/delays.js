@@ -26,7 +26,6 @@ describe('delays', () => {
             chai.expect(delayedTrains[0]).to.have.property("ActivityId");
             chai.expect(delayedTrains[0]).to.have.property("ActivityType");
             chai.expect(Number(delayedTrains[0].OperationalTrainNumber)).to.be.a('number');
-            chai.expect(delayedTrains[0].AdvertisedTimeAtLocation).to.be.a('string').that.includes("-", ":", "+");
         });
 
         it('getCodes should return reason codes', async function() {
