@@ -1,4 +1,4 @@
-/* global it describe before */
+/* global it describe before beforeEach */
 
 /**
  * Test file for graphql queries
@@ -81,16 +81,18 @@ describe('root', () => {
                 await db.client.close();
             });
         await functions.resetCollection("tickets", docs)
-        .catch(err => console.log(err));
+            .catch(err => console.log(err));
     });
 
     beforeEach(async () => {
         const response = await chai.request(server).get('/token');
+
         token = response._body.data.token;
 
         await chai.request(server).get('/register').send({email: "app@email.se", password: "test"});
-        db = await database.getUserDb();
+        let db = await database.getUserDb();
         let found = await db.collection.findOne({ email: "app@email.se" });
+
         apiKey = found.key;
     });
 
@@ -102,7 +104,7 @@ describe('root', () => {
                 .set('x-access-token', token)
                 .send({ query: codesQuery})
                 .end((err, res) => {
-                    res.body.data.should.have.property('Codes')
+                    res.body.data.should.have.property('Codes');
                     res.should.have.status(200);
                     res.body.should.have.property("data");
                     res.body.data.Codes.length.should.equal(2);
@@ -120,7 +122,7 @@ describe('root', () => {
                 .set('x-access-token', token)
                 .send({ query: delaysQuery})
                 .end((err, res) => {
-                    res.body.data.should.have.property('Delays')
+                    res.body.data.should.have.property('Delays');
                     res.should.have.status(200);
                     res.body.data.Delays.length.should.equal(2);
 
@@ -138,7 +140,7 @@ describe('root', () => {
                 .set('x-access-token', token)
                 .send({ query: ticketsQuery})
                 .end((err, res) => {
-                    res.body.data.should.have.property('Tickets')
+                    res.body.data.should.have.property('Tickets');
                     res.should.have.status(200);
                     res.body.should.have.property("data");
                     res.body.data.Tickets.should.be.an("array");
@@ -157,10 +159,10 @@ describe('root', () => {
                 .set('x-access-token', token)
                 .send({ query: `{Code(Code: "ANA002"){Level1Description}}`})
                 .end((err, res) => {
-                    res.body.data.should.have.property('Code')
+                    res.body.data.should.have.property('Code');
                     res.should.have.status(200);
                     res.body.should.have.property("data");
-                    res.body.data.Code.Level1Description.should.equal('Brofel')
+                    res.body.data.Code.Level1Description.should.equal('Brofel');
 
                     done();
                 });
@@ -175,7 +177,7 @@ describe('root', () => {
                 .set('x-access-token', token)
                 .send({ query: `{Ticket(id: 1){code}}`})
                 .end((err, res) => {
-                    res.body.data.should.have.property('Ticket')
+                    res.body.data.should.have.property('Ticket');
                     res.should.have.status(200);
                     res.body.should.have.property("data");
                     res.body.data.Ticket.code.should.equal("ANA002");
@@ -184,5 +186,4 @@ describe('root', () => {
                 });
         });
     });
-
 });

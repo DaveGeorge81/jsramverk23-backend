@@ -11,7 +11,7 @@ const CodeType = new GraphQLObjectType({
         Level1Description: { type: GraphQLString },
         Level2Description: { type: GraphQLString },
         Level3Description: { type: GraphQLString },
-})
-})
+    })
+});
 
 module.exports = CodeType;

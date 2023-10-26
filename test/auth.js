@@ -1,4 +1,4 @@
-/* global it describe */
+/* global it describe before beforeEach */
 
 /**
  * Test file for checking route connections
@@ -21,28 +21,29 @@ let found;
 describe('auth', () => {
     before(async () => {
         const db = await database.getUserDb();
-        
-                db.db.listCollections(
-                    { name: collectionName }
-                )
-                    .next()
-                    .then(async function(info) {
-                        if (info) {
-                            await db.collection.drop();
-                        }
-                    })
-                    .catch(function(err) {
-                        console.error(err);
-                    })
-                    .finally(async function() {
-                        await db.client.close();
-                    });
+
+        db.db.listCollections(
+            { name: collectionName }
+        )
+            .next()
+            .then(async function(info) {
+                if (info) {
+                    await db.collection.drop();
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
+            })
+            .finally(async function() {
+                await db.client.close();
+            });
     });
 
     beforeEach(async () => {
         let db = await database.getUserDb();
+
         found = await db.collection.findOne({ email: "test@email.se" });
-    })
+    });
 
     describe('GET /token', () => {
         it('200 getting /token route', (done) => {
@@ -55,7 +56,7 @@ describe('auth', () => {
                     res.body.data.message.should.equal("Token created");
                     done();
                 });
-        })
+        });
     });
 
     describe('POST /register', () => {
@@ -103,8 +104,8 @@ describe('auth', () => {
                     res.body.data.message.should.include("User successfully registered");
 
                     done();
-                })
-        })
+                });
+        });
 
         it('401 register with email that has already been registered', (done) => {
             chai.request(server)
@@ -125,10 +126,10 @@ describe('auth', () => {
 
         describe('POST /login', () => {
             it('401 login without email', (done) => {
-                user = {
+                let user = {
                     password: "test",
                     api_key: found.key
-                }
+                };
 
                 chai.request(server)
                     .post("/login")
@@ -144,10 +145,10 @@ describe('auth', () => {
             });
 
             it('401 login without password', (done) => {
-                user = {
+                let user = {
                     email: "test@email.se",
                     api_key: found.key
-                }
+                };
 
                 chai.request(server)
                     .post("/login")
@@ -163,10 +164,10 @@ describe('auth', () => {
             });
 
             it('401 login without apikey', (done) => {
-                user = {
+                let user = {
                     email: "test@email.se",
                     password: "test"
-                }
+                };
 
                 chai.request(server)
                     .post("/login")
@@ -182,11 +183,11 @@ describe('auth', () => {
             });
 
             it('401 login user not found', (done) => {
-                user = {
+                let user = {
                     email: "noone@email.se",
                     password: "test",
                     api_key: found.key
-                }
+                };
 
                 chai.request(server)
                     .post("/login")
@@ -202,11 +203,11 @@ describe('auth', () => {
             });
 
             it('200 login', (done) => {
-                user = {
+                let user = {
                     email: "test@email.se",
                     password: "test",
                     api_key: found.key
-                }
+                };
 
                 chai.request(server)
                     .post("/login")
@@ -222,4 +223,4 @@ describe('auth', () => {
             });
         });
     });
-})
+});

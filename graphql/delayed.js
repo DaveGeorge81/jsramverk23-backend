@@ -23,8 +23,8 @@ const DelayType = new GraphQLObjectType({
         TimeAtLocation: { type: GraphQLString },
         OperationalTrainNumber: { type: new GraphQLNonNull(GraphQLInt) },
         TrainOwner: { type: GraphQLString },
-        })
-})
+    })
+});
 
 const LocationType = new GraphQLObjectType({
     name: 'Location',
@@ -34,6 +34,6 @@ const LocationType = new GraphQLObjectType({
         Priority: { type: GraphQLInt },
         Order: { type: GraphQLInt }
     })
-})
+});
 
 module.exports = DelayType;

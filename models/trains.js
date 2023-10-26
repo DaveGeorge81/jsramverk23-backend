@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 const EventSource = require('eventsource');
-const delayed = require('./delayed.js');
 
 function getQuery() {
     return `<REQUEST>
@@ -21,7 +20,7 @@ const trains = {
             console.log("Connection to server opened.");
         };
 
-        io.on('connection', (socket) => {
+        io.on('connection', () => {
             console.log('a user connected');
 
             eventSource.onmessage = (e) => {

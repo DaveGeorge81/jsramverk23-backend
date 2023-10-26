@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const trains = require('./models/trains.js');
 const delayed = require('./routes/delayed.js');
 const tickets = require('./routes/tickets.js');
-const ticketModel = require("./models/tickets.js")
+const ticketModel = require("./models/tickets.js");
 const codes = require('./routes/codes.js');
 const token = require('./routes/token.js');
 const login = require('./routes/login.js');
@@ -20,7 +20,7 @@ const { createHandler } = require('graphql-http/lib/use/express');
 // const expressPlayground = require('graphql-playground-middleware-express')
 //     .default
 
-const { GraphQLSchema } = require('graphql')
+const { GraphQLSchema } = require('graphql');
 
 const RootQueryType = require("./graphql/root.js");
 const RootMutationType = require("./graphql/mutate.js");
@@ -36,7 +36,7 @@ const httpServer = require("http").createServer(app);
 app.use(cors());
 app.options('*', cors());
 
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 
 app.disable('x-powered-by');
 
@@ -71,7 +71,7 @@ app.all('*', authModel.checkToken);
 
 app.use('/graphql', createHandler({
     schema: schema
-}))
+}));
 
 app.use("/delayed", delayed);
 app.use("/tickets", tickets);
@@ -81,12 +81,12 @@ let allTickets = [];
 
 io.sockets.on('connection', async function(socket) {
     allTickets = await ticketModel.getTickets();
-    console.log(socket.id)
+    console.log(socket.id);
     allTickets.map((ticket) => {
         ticket.locked = false;
         console.log(ticket);
 
-        return ticket
+        return ticket;
     });
 
     socket.emit("allTickets", allTickets);
@@ -99,7 +99,7 @@ io.sockets.on('connection', async function(socket) {
         });
 
         io.emit("allTickets", allTickets);
-    })
+    });
 
     socket.on("changeStatus", async function(data) {
         allTickets = await ticketModel.getTickets();
@@ -117,9 +117,7 @@ io.sockets.on('connection', async function(socket) {
 
     //     io.emit("allTrains", allTrains);
     // });
-
-})
-
+});
 
 const server = httpServer.listen(port, async () => {
     console.log(`Example app listening on port ${port}`);

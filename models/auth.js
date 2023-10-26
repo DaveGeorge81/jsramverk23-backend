@@ -175,7 +175,7 @@ const auth = {
         try {
             db = await database.getUserDb();
 
-            const filter = { email: email, key: apiKey }
+            const filter = { email: email, key: apiKey };
             const user = await db.collection.findOne(filter);
 
             if (user) {
@@ -271,6 +271,7 @@ const auth = {
         }
 
         let db;
+
         db = await database.getUserDb();
 
         let dbFind = await db.collection.findOne({ email: email }) || "";
@@ -282,7 +283,7 @@ const auth = {
                     errors: {
                         title: "Email already registered"
                     }
-                })
+                });
             }
         }
 
@@ -301,13 +302,12 @@ const auth = {
             }
 
             try {
-
                 let filter = { key: apiKey };
                 let doc = {
                     $set: {
                         password: hash
                     }
-                }
+                };
 
                 await db.collection.updateOne(filter, doc);
 

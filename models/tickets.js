@@ -65,10 +65,10 @@ const tickets = {
             traindate: req.traindate,
         };
 
-        const today = new Date()
+        const today = new Date();
 
         await db.collection.updateOne(
-            { "id" : req.id },
+            { "id": req.id },
             { $set: {"code": req.code, "traindate": today.toISOString().substring(0, 10)}});
         await db.client.close();
 

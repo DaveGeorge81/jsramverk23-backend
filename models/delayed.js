@@ -36,11 +36,9 @@ const delayed = {
     getDelayedTrains: async function getDelayedTrains(req, res=undefined) {
         if (res === undefined && process.env.NODE_ENV === 'test') {
             const response = await require(
-                "../db/mockDelay.json")
+                "../db/mockDelay.json");
 
-                return response;
-                ;
-
+            return response;
         }
         const query = getQuery();
 

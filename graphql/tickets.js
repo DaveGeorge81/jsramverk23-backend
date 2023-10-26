@@ -12,7 +12,7 @@ const TicketType = new GraphQLObjectType({
         code: { type: GraphQLString },
         trainnumber: { type: GraphQLString },
         traindate: { type: GraphQLString },
-})
-})
+    })
+});
 
 module.exports = TicketType;

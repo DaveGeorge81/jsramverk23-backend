@@ -1,4 +1,4 @@
-/* global it describe */
+/* global it describe before beforeEach afterEach */
 
 /**
  * Test file for checking route connections
@@ -42,11 +42,14 @@ describe('app', () => {
 
     beforeEach(async () => {
         const response = await chai.request(server).get('/token');
+
         token = response._body.data.token;
 
         await chai.request(server).get('/register').send({email: "app@email.se", password: "test"});
         db = await database.getUserDb();
+
         let found = await db.collection.findOne({ email: "app@email.se" });
+
         apiKey = found.key;
     });
 

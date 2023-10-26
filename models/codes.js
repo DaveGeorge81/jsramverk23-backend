@@ -1,4 +1,3 @@
-const { json } = require('body-parser');
 const fetch = require('node-fetch');
 
 function getQuery() {
@@ -17,9 +16,9 @@ const codes = {
     getCodes: async function getCodes(req, res=undefined,) {
         if (res === undefined && process.env.NODE_ENV === 'test') {
             const response = await require(
-                "../db/mockCode.json")
+                "../db/mockCode.json");
 
-                return response;
+            return response;
         }
         const query = getQuery();
 

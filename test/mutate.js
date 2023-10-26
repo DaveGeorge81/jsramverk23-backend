@@ -1,4 +1,4 @@
-/* global it describe before */
+/* global it describe before beforeEach*/
 
 /**
  * Test file for graphql mutations
@@ -63,7 +63,6 @@ let apiKey;
 
 describe('mutation', () => {
     before(async () => {
-
         const db = await database.getDb();
 
         db.db.listCollections(
@@ -82,16 +81,19 @@ describe('mutation', () => {
                 await db.client.close();
             });
         await functions.resetCollection("tickets", docs)
-        .catch(err => console.log(err));
+            .catch(err => console.log(err));
     });
 
     beforeEach(async () => {
         const response = await chai.request(server).get('/token');
+
         token = response._body.data.token;
 
         await chai.request(server).get('/register').send({email: "app@email.se", password: "test"});
-        db = await database.getUserDb();
+        let db = await database.getUserDb();
+
         let found = await db.collection.findOne({ email: "app@email.se" });
+
         apiKey = found.key;
     });
 
@@ -103,13 +105,13 @@ describe('mutation', () => {
                 .set('x-access-token', token)
                 .send({ query: newTicket})
                 .end((err, res) => {
-                    res.body.data.addTicket.should.have.property('id')
-                    res.body.data.addTicket.should.have.property('code')
-                    res.body.data.addTicket.should.have.property('trainnumber')
-                    res.body.data.addTicket.should.have.property('traindate')
+                    res.body.data.addTicket.should.have.property('id');
+                    res.body.data.addTicket.should.have.property('code');
+                    res.body.data.addTicket.should.have.property('trainnumber');
+                    res.body.data.addTicket.should.have.property('traindate');
                     res.should.have.status(200);
                     res.body.should.have.property("data");
-                    res.body.data.addTicket.id.should.equal(3)
+                    res.body.data.addTicket.id.should.equal(3);
                     // res.body.data.Codes.should.be.an("array");
                     // res.body.data.Codes.length.should.equal(0);
 
@@ -118,25 +120,24 @@ describe('mutation', () => {
         });
     });
 
-        /* update ticket in graphql */
-        describe('update ticket in graphql', () => {
-            it('should get 200 when updating a ticket', (done) => {
-                chai.request(server)
-                    .post("/graphql?api_key=" + apiKey)
-                    .set('x-access-token', token)
-                    .send({ query: updateTicket})
-                    .end((err, res) => {
-                        res.body.data.updateTicket.should.have.property('id')
-                        res.body.data.updateTicket.should.have.property('code')
-                        res.body.data.updateTicket.should.have.property('trainnumber')
-                        res.body.data.updateTicket.should.have.property('traindate')
-                        res.should.have.status(200);
-                        res.body.should.have.property("data");
-                        res.body.data.updateTicket.code.should.equal("ANA006")
+    /* update ticket in graphql */
+    describe('update ticket in graphql', () => {
+        it('should get 200 when updating a ticket', (done) => {
+            chai.request(server)
+                .post("/graphql?api_key=" + apiKey)
+                .set('x-access-token', token)
+                .send({ query: updateTicket})
+                .end((err, res) => {
+                    res.body.data.updateTicket.should.have.property('id');
+                    res.body.data.updateTicket.should.have.property('code');
+                    res.body.data.updateTicket.should.have.property('trainnumber');
+                    res.body.data.updateTicket.should.have.property('traindate');
+                    res.should.have.status(200);
+                    res.body.should.have.property("data");
+                    res.body.data.updateTicket.code.should.equal("ANA006");
 
-                        done();
-                    });
-            });
+                    done();
+                });
         });
-
+    });
 });

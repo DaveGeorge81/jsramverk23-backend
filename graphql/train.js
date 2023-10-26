@@ -14,7 +14,7 @@ const TrainType = new GraphQLObjectType({
         bearing: { type: GraphQLString },
         status: { type: GraphQLString },
         speed: { type: GraphQLString }
-        })
-})
+    })
+});
 
 module.exports = TrainType;

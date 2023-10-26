@@ -5,13 +5,13 @@ const {
     GraphQLInt
 } = require('graphql');
 
-const codesModel = require("../models/codes.js")
-const delayedModel = require("../models/delayed.js")
-const ticketModel = require("../models/tickets.js")
+const codesModel = require("../models/codes.js");
+const delayedModel = require("../models/delayed.js");
+const ticketModel = require("../models/tickets.js");
 
-const CodeType = require("./codes.js")
-const DelayType = require("./delayed.js")
-const TicketType = require("./tickets.js")
+const CodeType = require("./codes.js");
+const DelayType = require("./delayed.js");
+const TicketType = require("./tickets.js");
 
 
 const RootQueryType = new GraphQLObjectType({
@@ -27,8 +27,7 @@ const RootQueryType = new GraphQLObjectType({
             resolve: async function(parent, args) {
                 let codesArray = await codesModel.getCodes();
 
-                
-                return codesArray.find(code => code.Code === args.Code)
+                return codesArray.find(code => code.Code === args.Code);
             }
         },
         Codes: {
@@ -47,7 +46,8 @@ const RootQueryType = new GraphQLObjectType({
             resolve: async function(parent, args) {
                 let delaysArray = await delayedModel.getDelayedTrains();
 
-                return delaysArray.find(delay => delay.OperationalTrainNumber === args.OperationalTrainNumber)
+                return delaysArray
+                    .find(delay => delay.OperationalTrainNumber === args.OperationalTrainNumber);
             }
         },
         Delays: {
@@ -66,7 +66,7 @@ const RootQueryType = new GraphQLObjectType({
             resolve: async function(parent, args) {
                 let ticketArray = await ticketModel.getTickets();
 
-                return ticketArray.find(ticket => ticket.id === args.id)
+                return ticketArray.find(ticket => ticket.id === args.id);
             }
         },
         Tickets: {

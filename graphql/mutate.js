@@ -5,9 +5,9 @@ const {
 } = require('graphql');
 
 
-const ticketModel = require("../models/tickets.js")
+const ticketModel = require("../models/tickets.js");
 
-const TicketType = require("./tickets.js")
+const TicketType = require("./tickets.js");
 
 const RootMutationType = new GraphQLObjectType({
     name: 'Mutation',
@@ -23,7 +23,13 @@ const RootMutationType = new GraphQLObjectType({
                 traindate: { type: GraphQLString },
             },
             resolve: async function(parent, args) {
-                let newTicket = { id: args.id, code: args.code, trainnumber: args.trainnumber, traindate: args.traindate };
+                let newTicket = {
+                    id: args.id,
+                    code: args.code,
+                    trainnumber: args.trainnumber,
+                    traindate: args.traindate
+                };
+
                 return await ticketModel.createTicket(newTicket);
             }
         },
@@ -37,7 +43,13 @@ const RootMutationType = new GraphQLObjectType({
                 traindate: { type: GraphQLString },
             },
             resolve: async function(parent, args) {
-                let updatedTicket = { id: args.id, code: args.code, trainnumber: args.trainnumber, traindate: args.traindate };
+                let updatedTicket = {
+                    id: args.id,
+                    code: args.code,
+                    trainnumber: args.trainnumber,
+                    traindate: args.traindate
+                };
+
                 return await ticketModel.updateTicket(updatedTicket);
             }
         },
