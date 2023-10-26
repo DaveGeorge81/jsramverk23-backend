@@ -105,6 +105,7 @@ describe('root', () => {
                     res.body.data.should.have.property('Codes')
                     res.should.have.status(200);
                     res.body.should.have.property("data");
+                    res.body.data.Codes.length.should.equal(2);
 
                     done();
                 });
@@ -121,7 +122,7 @@ describe('root', () => {
                 .end((err, res) => {
                     res.body.data.should.have.property('Delays')
                     res.should.have.status(200);
-                    res.body.should.have.property("data");
+                    res.body.data.Delays.length.should.equal(2);
 
 
                     done();
@@ -159,6 +160,7 @@ describe('root', () => {
                     res.body.data.should.have.property('Code')
                     res.should.have.status(200);
                     res.body.should.have.property("data");
+                    res.body.data.Code.Level1Description.should.equal('Brofel')
 
                     done();
                 });

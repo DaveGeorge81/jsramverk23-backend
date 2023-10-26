@@ -16,10 +16,8 @@ function getQuery() {
 const codes = {
     getCodes: async function getCodes(req, res=undefined,) {
         if (res === undefined && process.env.NODE_ENV === 'test') {
-            const response = await fetch(
+            const response = await require(
                 "../db/mockCode.json")
-                .then((response) => response.json())
-                .then((json) => console.log(json));
 
                 return response;
         }
